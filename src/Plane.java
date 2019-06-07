@@ -2,6 +2,7 @@
 public class Plane {
 	private int x, height;
 	private int jumping;
+	private boolean falling;
 	private char me;
 	Model model;
 	
@@ -10,6 +11,7 @@ public class Plane {
 		this.height = height;
 		this.me = c;
 		model = m;
+		falling = false;
 	}
 	public int get_x() {
 		return x;
@@ -26,6 +28,9 @@ public class Plane {
 	public boolean jumping() {
 		return jumping > 0;
 	}
+	public boolean falling() {
+		return falling;
+	}
 	public boolean move_left() {
 		if (x <= 0) return false;
 		else {
@@ -41,7 +46,10 @@ public class Plane {
 		}
 	}
 	public void jump() {
-		jumping = model.get_number().jump_height();
+		if (!jumping() && !falling()) {
+			jumping = model.get_number().jump_height();
+			falling = true;
+		}
 	}
 	public void shoot() {
 		if (model.get_number().get_bullet() == 0) return;
@@ -54,6 +62,8 @@ public class Plane {
 	public void fall() {
 		if (!model.isWall(x,height-1)) {
 			height--;
+		} else {
+			falling = false;
 		}
 	}
 	public void continue_jumping() {

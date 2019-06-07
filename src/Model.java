@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.Random;
 
 public class Model {
 	
@@ -18,6 +19,7 @@ public class Model {
 	private LinkedList<Bullet> bullets;
 	private LinkedList<Rock> rocks;
 	private LinkedList<UndestroyablePart> unDestroys;
+	private LinkedList<Supply> supplies;
 	private Plane plane;
 	
 	/*----------------
@@ -65,10 +67,11 @@ public class Model {
 		set_walls();
 		set_bullets();
 		set_rocks();
+		set_supplies();
 	}
 	private void set_walls() {
 		walls = new LinkedList<Wall>();
-		walls.add(new Wall(-1));
+		walls.add(new Wall(-2));
 	}
 	private void set_bullets() {
 		bullets = new LinkedList<Bullet>();
@@ -76,12 +79,15 @@ public class Model {
 	private void set_rocks() {
 		rocks = new LinkedList<Rock>();
 	}
+	private void set_supplies() {
+		supplies = new LinkedList<Supply>();
+	}
 	
 	/*----------------
 	 * publish variables
 	 * ---------------*/
 	public int get_score() {
-		return score;
+		return score + floor * number.get_score_per_floor();
 	}
 	public int get_floor() {
 		return floor;
@@ -104,6 +110,9 @@ public class Model {
 	public LinkedList<UndestroyablePart> get_unDestroys() {
 		return unDestroys;
 	}
+	public LinkedList<Supply> get_supplies() {
+		return supplies;
+	}
 	public Plane get_plane() {
 		return plane;
 	}
@@ -122,10 +131,14 @@ public class Model {
 		if (delay.time_to_update_screen(time)) {
 			update_screen();
 			update_wall();
+			update_floor();
 		}
 //		update_rock();
 		if (delay.time_to_update_bullet(time)) {
 			update_bullet();
+		}
+		if (delay.time_to_update_supply(time)) {
+			update_supply();
 		}
 		if (delay.time_to_update_plane(time)) {
 			update_plane();
@@ -143,8 +156,28 @@ public class Model {
 			}
 		}
 		walls = tmp;
-		if (height % 8 == 0)
-			walls.add(new Wall(height + 23));
+		if (height % number.get_floor_height() == 0) {
+			int local_height = height + view.get_height();
+			walls.add(new Wall(local_height));
+			add_supply(local_height);
+		}
+	}
+	private void update_supply() {
+		LinkedList<Supply> tmp = new LinkedList<Supply>();
+		for (Supply supply:supplies) {
+			supply.update();
+			if (view.isOnScreen(supply.get_x(), supply.get_y()-1)) {
+				tmp.add(supply);
+			}
+		}
+	}
+	private void add_supply(int h) {
+		Random r = new Random();
+		int k = r.nextInt(number.get_supply_rate());
+		if (k == 0) supplies.add(new Supply(this, h+1));
+	}
+	private void update_floor() {
+		floor = plane.get_height() / number.get_floor_height();
 	}
 	private void update_rock() {
 		LinkedList<Rock> tmp = new LinkedList<Rock>();
@@ -171,7 +204,6 @@ public class Model {
 				continue;
 			}
 			if (isDestroyableWall(x,y)) {
-				destroyWall(x,y);
 				continue;
 			}
 			if (view.isOnScreen(x,y)) {
@@ -193,9 +225,6 @@ public class Model {
 	}
 	private boolean isRock(int x, int y) {
 		return false;
-	}
-	private void destroyWall(int x, int y) {
-
 	}
 	private void destroyRock(int x, int y) {
 

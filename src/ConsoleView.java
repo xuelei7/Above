@@ -49,6 +49,7 @@ public class ConsoleView {
 	public void update() {
 		clear();
 		paint_wall();
+		paint_supply();
 		draw_plane();
 		update_rock();
 		update_bullet();
@@ -59,6 +60,12 @@ public class ConsoleView {
 		LinkedList<Wall> walls = model.get_walls();
 		for (Wall wall : walls) {
 			drawString(wall.get_String(), 0, height - (wall.get_y() - model.get_height()));
+		}
+	}
+	private void paint_supply() {
+		LinkedList<Supply> supplies = model.get_supplies();
+		for (Supply supply: supplies) {
+			put(supply.get_char(), supply.get_x(), height - (supply.get_y() - model.get_height()));
 		}
 	}
 	private void draw_plane() {
@@ -93,7 +100,6 @@ public class ConsoleView {
 	}
 	private void paint_first_line() {
 		System.out.println("Time: " + model.get_time() + " Height: " + model.get_height());
-		System.out.println("Bullet number: " + model.get_number().get_bullet());
 		System.out.println("Score: " + model.get_score() + " Floor: " + model.get_floor() + " Bullet: " + model.get_number().get_bullet());
 	}
 	private void paint_screen() {

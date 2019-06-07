@@ -7,6 +7,7 @@ public class DelayController {
 	private int screen = 20;
 	private int plane = 2;
 	private int bullet = 1;
+	private int supply = 1;
 	
 	DelayController() {
 	}
@@ -37,5 +38,8 @@ public class DelayController {
 	}
 	public boolean time_to_update_bullet(int time) {
 		return (time % bullet == 0);
+	}
+	public boolean time_to_update_supply(int time) {
+		return (time % supply == 0);
 	}
 }
