@@ -4,8 +4,9 @@
 public class DelayController {
 
 	private int rock = 20;
-	private int screen = 7;
-	private int plane = 1;
+	private int screen = 20;
+	private int plane = 2;
+	private int bullet = 1;
 	
 	DelayController() {
 	}
@@ -34,5 +35,7 @@ public class DelayController {
 	public boolean time_to_update_plane(int time) {
 		return (time % plane == 0);
 	}
-	
+	public boolean time_to_update_bullet(int time) {
+		return (time % bullet == 0);
+	}
 }

@@ -63,10 +63,18 @@ public class Model {
 	}
 	private void set_objects() {
 		set_walls();
+		set_bullets();
+		set_rocks();
 	}
 	private void set_walls() {
 		walls = new LinkedList<Wall>();
 		walls.add(new Wall(-1));
+	}
+	private void set_bullets() {
+		bullets = new LinkedList<Bullet>();
+	}
+	private void set_rocks() {
+		rocks = new LinkedList<Rock>();
 	}
 	
 	/*----------------
@@ -83,9 +91,6 @@ public class Model {
 	}
 	public int get_height() {
 		return height;
-	}
-	public int get_bullet() {
-		return number.get_bullet();
 	}
 	public LinkedList<Wall> get_walls() {
 		return walls;
@@ -114,10 +119,14 @@ public class Model {
 	 * ---------------*/
 	public void update() {
 //		update_delay();
-		update_screen();
-		update_wall();
+		if (delay.time_to_update_screen(time)) {
+			update_screen();
+			update_wall();
+		}
 //		update_rock();
-//		update_bullet();
+		if (delay.time_to_update_bullet(time)) {
+			update_bullet();
+		}
 		if (delay.time_to_update_plane(time)) {
 			update_plane();
 		}
@@ -155,10 +164,33 @@ public class Model {
 		LinkedList<Bullet> tmp = new LinkedList<Bullet>();
 		for (Bullet bullet: bullets) {
 			bullet.update();
-			if (bullet.onScreen())
+			int x = bullet.get_x();
+			int y = bullet.get_y();
+			if (isDestroyableWall(x,y)) {
+				destroyWall(x,y);
+				continue;
+			}
+			if (isRock(x,y)) {
+				destroyRock(x,y);
+				continue;
+			}
+			if (view.isOnScreen(x,y)) {
 				tmp.add(bullet);
+			}
 		}
 		bullets = tmp;
+	}
+	private boolean isDestroyableWall(int x, int y) {
+		return false;
+	}
+	private boolean isRock(int x, int y) {
+		return false;
+	}
+	private void destroyWall(int x, int y) {
+
+	}
+	private void destroyRock(int x, int y) {
+
 	}
 	public void update_plane() {
 		if (plane.jumping()) {
@@ -182,6 +214,9 @@ public class Model {
 		}
 		return false;
 	}
+	public void add_bullet(int x, int y) {
+		bullets.add(new Bullet(x,y));
+	}
 	
 	public synchronized void process(String event) {
 		//時間経過
@@ -198,12 +233,13 @@ public class Model {
 			char c = event.charAt(0);
 			if (c == 'a') {
 				if (!plane.move_left()) update();
-			} else if (c == 'd') {
+			}
+			else if (c == 'd') {
 				if (!plane.move_right()) update();
-			}/*
-			else if (c == 's'') {
+			}
+			else if (c == 'm') {
 				plane.shoot();
-			}*/ 
+			}
 			else if (c == 'w' && !plane.jumping()) {
 				plane.jump();
 			} else {

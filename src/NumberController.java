@@ -9,13 +9,13 @@ public class NumberController {
 	
 	public NumberController(int wall, int bullet, int rock) {
 		this.mx_wall = wall;
-		wall = 0;
+		this.wall = 0;
 
 		this.mx_bullet = bullet;
-		bullet = 100;
+		this.bullet = 5;
 		
 		this.mx_rock = rock;
-		rock = 0;
+		this.rock = 0;
 	}
 	
 	public void update_mxwall(int time) {

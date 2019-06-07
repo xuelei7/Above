@@ -71,7 +71,10 @@ public class ConsoleView {
 		
 	}
 	private void update_bullet() {
-		
+		LinkedList<Bullet> bullets = model.get_bullets();
+		for (Bullet bullet : bullets) {
+			put(bullet.get_char(), bullet.get_x(), height - (bullet.get_y() - model.get_height()));
+		}
 	}
 	public void game_over() {
 		clear();
@@ -90,9 +93,8 @@ public class ConsoleView {
 	}
 	private void paint_first_line() {
 		System.out.println("Time: " + model.get_time() + " Height: " + model.get_height());
-		System.out.println("Plane height: " + model.get_plane().get_height());
-		System.out.println("Above: " + (model.get_height() + height) + " Below: " + model.get_height());
-		System.out.println("Score: " + model.get_score() + " Floor: " + model.get_floor() + " Bullet: " + model.get_bullet());
+		System.out.println("Bullet number: " + model.get_number().get_bullet());
+		System.out.println("Score: " + model.get_score() + " Floor: " + model.get_floor() + " Bullet: " + model.get_number().get_bullet());
 	}
 	private void paint_screen() {
 		for (int h = 0; h < screen.length; h++){
