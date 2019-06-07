@@ -55,7 +55,7 @@ public class Model {
 	}
 	private void set_plane() {
 		//デフォルトのx座標，y座標
-		plane = new Plane(this,0,0,'0');
+		plane = new Plane(this,39,1,'0');
 	}
 	private void set_variables() {
 		score = 0;
@@ -71,7 +71,7 @@ public class Model {
 	}
 	private void set_walls() {
 		walls = new LinkedList<Wall>();
-		walls.add(new Wall(-2));
+		walls.add(new Wall(0));
 	}
 	private void set_bullets() {
 		bullets = new LinkedList<Bullet>();
@@ -122,12 +122,15 @@ public class Model {
 	public ConsoleView get_view() {
 		return view;
 	}
+	public DelayController get_delay() {
+		return delay;
+	}
 
 	/*----------------
 	 * update
 	 * ---------------*/
 	public void update() {
-//		update_delay();
+		update_delay();
 		if (delay.time_to_update_screen(time)) {
 			update_screen();
 			update_wall();
@@ -258,6 +261,9 @@ public class Model {
 	}
 	public void add_bullet(int x, int y) {
 		bullets.add(new Bullet(x,y));
+	}
+	public void add_shooting_penalty() {
+		score -= number.get_shooting_penalty();
 	}
 	
 	public synchronized void process(String event) {

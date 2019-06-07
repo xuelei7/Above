@@ -100,6 +100,7 @@ public class ConsoleView {
 	}
 	private void paint_first_line() {
 		System.out.println("Time: " + model.get_time() + " Height: " + model.get_height());
+		System.out.println("Level: " + model.get_delay().get_screen());
 		System.out.println("Score: " + model.get_score() + " Floor: " + model.get_floor() + " Bullet: " + model.get_number().get_bullet());
 	}
 	private void paint_screen() {

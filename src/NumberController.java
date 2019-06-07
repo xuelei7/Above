@@ -6,12 +6,13 @@ public class NumberController {
 	private int mx_rock, rock;
 	private int mx_supply = 2;
 	private int supply_num = 5;
-	private int supply_rate = 4;
+	private int supply_rate = 2;
 	private int bullet = 100;
 	private int bullet_add = 5;
+	private int shooting_penalty = 10;
 	private int wall_min = 5;
 	private int jump_height = 9;
-	private int floor_height = 8;
+	private int floor_height = 7;
 	private int score_per_floor = 100;
 	
 	public NumberController(int wall, int bullet, int rock) {
@@ -74,6 +75,9 @@ public class NumberController {
 	}
 	public int get_supply_rate() {
 		return supply_rate;
+	}
+	public int get_shooting_penalty() {
+		return shooting_penalty;
 	}
 	public int jump_height() {
 		return jump_height;

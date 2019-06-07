@@ -4,7 +4,9 @@
 public class DelayController {
 
 	private int rock = 20;
-	private int screen = 20;
+	private int mx_screen = 13;
+	private int screen = mx_screen;
+	private int screen_div = 200;
 	private int plane = 2;
 	private int bullet = 1;
 	private int supply = 1;
@@ -13,7 +15,7 @@ public class DelayController {
 	}
 	
 	public void update(int time) {
-		update_rock(time);
+		//update_rock(time);
 		update_screen(time);
 	}
 	
@@ -21,6 +23,7 @@ public class DelayController {
 		
 	}
 	public void update_screen(int time) {
+		screen = mx_screen - time / screen_div;
 	}
 	
 	public int get_rock() {

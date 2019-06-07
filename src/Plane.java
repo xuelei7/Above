@@ -55,6 +55,7 @@ public class Plane {
 		if (model.get_number().get_bullet() == 0) return;
 		model.get_number().change_add_bullet(-1);
 		model.add_bullet(x,height);
+		model.add_shooting_penalty();
 	}
 	public boolean nothing_under() {
 		return false;
