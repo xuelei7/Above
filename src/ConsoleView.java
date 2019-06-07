@@ -34,6 +34,9 @@ public class ConsoleView {
 	public boolean isOnScreen(int x, int y) {
 		return 0 <= x && x < width && model.get_height() <= y && y < (model.get_height() + height);
 	}
+	public boolean isOnScreen(int y) {
+		return model.get_height() <= y && y < (model.get_height() + height);
+	}
 	public int get_width() {
 		return width;
 	}
@@ -53,6 +56,7 @@ public class ConsoleView {
 		draw_plane();
 		update_rock();
 		update_bullet();
+		update_undestroys();
 		paint_first_line();
 		paint_screen();
 	}
@@ -76,6 +80,12 @@ public class ConsoleView {
 	}
 	private void update_rock() {
 		
+	}
+	private void update_undestroys() {
+		LinkedList<UndestroyablePart> undestroys = model.get_undestroys();
+		for (UndestroyablePart undestroy: undestroys) {
+			drawString(undestroy.get_String(), undestroy.get_x(), height - (undestroy.get_y() - model.get_height()));
+		}
 	}
 	private void update_bullet() {
 		LinkedList<Bullet> bullets = model.get_bullets();

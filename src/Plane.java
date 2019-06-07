@@ -61,7 +61,7 @@ public class Plane {
 		return false;
 	}
 	public void fall() {
-		if (!model.isWall(x,height-1)) {
+		if (!model.isWall(x,height-1) && !model.isUndestroyable(x,height-1)) {
 			height--;
 		} else {
 			falling = false;
@@ -69,7 +69,9 @@ public class Plane {
 	}
 	public void continue_jumping() {
 		//add height
-		if (!model.isWall(x,height+1) && model.get_view().isOnScreen(x, height+1)) {
+		if (!model.isWall(x,height+1)
+		&& model.get_view().isOnScreen(x, height+1)
+		&& !model.isUndestroyable(x,height+1)) {
 			height++;
 		}
 		//minus left jumping height

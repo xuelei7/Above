@@ -4,6 +4,8 @@ public class NumberController {
 	private int mx_wall, wall;
 	private int mx_bullet;
 	private int mx_rock, rock;
+	private int mx_undestroy_length;
+	private int undestroy_length = 10;
 	private int mx_supply = 2;
 	private int supply_num = 5;
 	private int supply_rate = 2;
@@ -14,8 +16,9 @@ public class NumberController {
 	private int jump_height = 9;
 	private int floor_height = 7;
 	private int score_per_floor = 100;
+	Model model;
 	
-	public NumberController(int wall, int bullet, int rock) {
+	public NumberController(Model m, int wall, int bullet, int rock) {
 		this.mx_wall = wall;
 		this.wall = 0;
 
@@ -23,6 +26,9 @@ public class NumberController {
 		
 		this.mx_rock = rock;
 		this.rock = 0;
+
+		model = m;
+		mx_undestroy_length = m.get_view().get_width() / 3;
 	}
 	
 	public void update_mxwall(int time) {
@@ -78,6 +84,9 @@ public class NumberController {
 	}
 	public int get_shooting_penalty() {
 		return shooting_penalty;
+	}
+	public int get_mx_undestroy_length() {
+		return mx_undestroy_length;
 	}
 	public int jump_height() {
 		return jump_height;

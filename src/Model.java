@@ -18,7 +18,7 @@ public class Model {
 	private LinkedList<Wall> walls;
 	private LinkedList<Bullet> bullets;
 	private LinkedList<Rock> rocks;
-	private LinkedList<UndestroyablePart> unDestroys;
+	private LinkedList<UndestroyablePart> undestroys;
 	private LinkedList<Supply> supplies;
 	private Plane plane;
 	
@@ -48,7 +48,7 @@ public class Model {
 	}
 	private void set_number() {
 		//wall, bullet, rock
-		number = new NumberController(20,20,23);
+		number = new NumberController(this,20,20,23);
 	}
 	private void set_judge() {
 		judge = new DeathJudge(this);
@@ -68,6 +68,7 @@ public class Model {
 		set_bullets();
 		set_rocks();
 		set_supplies();
+		set_undestroys();
 	}
 	private void set_walls() {
 		walls = new LinkedList<Wall>();
@@ -82,7 +83,10 @@ public class Model {
 	private void set_supplies() {
 		supplies = new LinkedList<Supply>();
 	}
-	
+	private void set_undestroys() {
+		undestroys = new LinkedList<UndestroyablePart>();
+	}
+
 	/*----------------
 	 * publish variables
 	 * ---------------*/
@@ -107,8 +111,8 @@ public class Model {
 	public LinkedList<Rock> get_rocks() {
 		return rocks;
 	}
-	public LinkedList<UndestroyablePart> get_unDestroys() {
-		return unDestroys;
+	public LinkedList<UndestroyablePart> get_undestroys() {
+		return undestroys;
 	}
 	public LinkedList<Supply> get_supplies() {
 		return supplies;
@@ -135,6 +139,7 @@ public class Model {
 			update_screen();
 			update_wall();
 			update_floor();
+			update_undestroy();
 		}
 //		update_rock();
 		if (delay.time_to_update_bullet(time)) {
@@ -168,6 +173,7 @@ public class Model {
 			int local_height = height + view.get_height();
 			walls.add(new Wall(local_height));
 			add_supply(local_height);
+			add_undestroy(local_height);
 		}
 	}
 	private void update_supply() {
@@ -179,6 +185,9 @@ public class Model {
 			}
 		}
 	}
+	private void add_undestroy(int h) {
+		undestroys.add(new UndestroyablePart(this, h));
+	}
 	private void add_supply(int h) {
 		Random r = new Random();
 		int k = r.nextInt(number.get_supply_rate());
@@ -186,6 +195,14 @@ public class Model {
 	}
 	private void update_floor() {
 		floor = plane.get_height() / number.get_floor_height();
+	}
+	private void update_undestroy() {
+		LinkedList<UndestroyablePart> tmp = new LinkedList<UndestroyablePart>();
+		for (UndestroyablePart undestroy : undestroys) {
+			if (view.isOnScreen(undestroy.get_y())) {
+				tmp.add(undestroy);
+			}
+		}
 	}
 	private void update_rock() {
 		LinkedList<Rock> tmp = new LinkedList<Rock>();
@@ -207,6 +224,9 @@ public class Model {
 			bullet.update();
 			int x = bullet.get_x();
 			int y = bullet.get_y();
+			if (isUndestroyable(x,y)) {
+				continue;
+			}
 			if (isRock(x,y)) {
 				destroyRock(x,y);
 				continue;
@@ -219,6 +239,16 @@ public class Model {
 			}
 		}
 		bullets = tmp;
+	}
+	public boolean isUndestroyable(int x, int y) {
+		for (UndestroyablePart undestroy: undestroys) {
+			if (undestroy.get_y() == y) {
+				int left = undestroy.get_x();
+				int right = left + undestroy.get_length() - 1;
+				return left <= x && x <= right;
+			}
+		}
+		return false;
 	}
 	private boolean isDestroyableWall(int x, int y) {
 		for (Wall wall: walls) {
