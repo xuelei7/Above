@@ -19,11 +19,14 @@ public class Wall {
 	public boolean isWall(int x) {
 		return wall[x] == '#';
 	}
-	public void destroy(int w) {
-		wall[w] = ' ';
+	public boolean isDestroyable(int x) {
+		return wall[x] == '#';
+	}
+	public void destroy(int x) {
+		wall[x] = ' ';
 	}
 
-	public int get_Y() {
+	public int get_y() {
 		return y;
 	}
 	public char get_status(int pos) {

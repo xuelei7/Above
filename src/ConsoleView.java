@@ -58,7 +58,7 @@ public class ConsoleView {
 	private void paint_wall() {
 		LinkedList<Wall> walls = model.get_walls();
 		for (Wall wall : walls) {
-			drawString(wall.get_String(), 0, height - (wall.get_Y() - model.get_height()));
+			drawString(wall.get_String(), 0, height - (wall.get_y() - model.get_height()));
 		}
 	}
 	private void draw_plane() {

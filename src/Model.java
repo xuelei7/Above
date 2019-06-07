@@ -166,12 +166,12 @@ public class Model {
 			bullet.update();
 			int x = bullet.get_x();
 			int y = bullet.get_y();
-			if (isDestroyableWall(x,y)) {
-				destroyWall(x,y);
-				continue;
-			}
 			if (isRock(x,y)) {
 				destroyRock(x,y);
+				continue;
+			}
+			if (isDestroyableWall(x,y)) {
+				destroyWall(x,y);
 				continue;
 			}
 			if (view.isOnScreen(x,y)) {
@@ -181,6 +181,14 @@ public class Model {
 		bullets = tmp;
 	}
 	private boolean isDestroyableWall(int x, int y) {
+		for (Wall wall: walls) {
+			if (wall.get_y() == y) {
+				if (wall.isDestroyable(x)) {
+					wall.destroy(x);
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 	private boolean isRock(int x, int y) {
@@ -208,7 +216,7 @@ public class Model {
 	}
 	public boolean isWall(int x, int y) {
 		for (Wall wall: walls) {
-			if (wall.get_Y() == y) {
+			if (wall.get_y() == y) {
 				return wall.isWall(x);
 			}
 		}
