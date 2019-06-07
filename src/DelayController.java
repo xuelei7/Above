@@ -3,14 +3,17 @@
 //delayの数値の小さければスピードが大きくなる
 public class DelayController {
 
-	private int rock = 20;
+	private int mx_rock = 20;
 	private int mx_screen = 13;
 	private int screen = mx_screen;
+	private int rock = mx_rock;
 	private int screen_div = 200;
+	private int rock_div = 100;
+	private int rock_add = 50;
 	private int plane = 2;
 	private int bullet = 1;
 	private int supply = 1;
-	
+
 	DelayController() {
 	}
 	
@@ -24,6 +27,7 @@ public class DelayController {
 	}
 	public void update_screen(int time) {
 		screen = mx_screen - time / screen_div;
+		rock = mx_rock - time / rock_div;
 	}
 	
 	public int get_rock() {
@@ -45,4 +49,10 @@ public class DelayController {
 	public boolean time_to_update_supply(int time) {
 		return (time % supply == 0);
 	}
+	public boolean time_to_add_rock(int time) {
+		return (time % rock_add == 0);
+	}
+	public boolean time_to_update_rock(int time) {
+		return (time % rock == 0);
+	} 
 }

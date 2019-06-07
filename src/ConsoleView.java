@@ -54,9 +54,9 @@ public class ConsoleView {
 		paint_wall();
 		paint_supply();
 		draw_plane();
-		update_rock();
 		update_bullet();
 		update_undestroys();
+		update_rock();
 		paint_first_line();
 		paint_screen();
 	}
@@ -79,7 +79,10 @@ public class ConsoleView {
 		put(me,px, height - (py - model.get_height()));
 	}
 	private void update_rock() {
-		
+		LinkedList<Rock> rocks = model.get_rocks();
+		for (Rock rock: rocks) {
+			drawOval(rock.get_char(), rock.get_x(), height - (rock.get_y() - model.get_height()), rock.get_width(), rock.get_height());
+		}
 	}
 	private void update_undestroys() {
 		LinkedList<UndestroyablePart> undestroys = model.get_undestroys();
@@ -110,7 +113,7 @@ public class ConsoleView {
 	}
 	private void paint_first_line() {
 		System.out.println("Time: " + model.get_time() + " Height: " + model.get_height());
-		System.out.println("Level: " + model.get_delay().get_screen());
+		System.out.println("Rock: " + model.get_rocks().size());
 		System.out.println("Score: " + model.get_score() + " Floor: " + model.get_floor() + " Bullet: " + model.get_number().get_bullet());
 	}
 	private void paint_screen() {
@@ -152,14 +155,12 @@ public class ConsoleView {
 		}
 	}
 	public void drawOval(char c, int x, int y, int w, int h) {
-		w = w / 2;
-		h = h / 2;
 		for (int i = y - h; i <= y + h; i++) {
 			for (int j = x - w; j <= x + w; j++) {
 				double xx = j - x;
 				double yy = i - y;
 				double tmp = xx*xx/w/w + yy*yy/h/h;
-				if (0.8 <= tmp && tmp <= 1.2) {
+				if (tmp <= 1.2) {
 					put(c,j,i);
 				}
 			}

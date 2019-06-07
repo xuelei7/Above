@@ -141,7 +141,12 @@ public class Model {
 			update_floor();
 			update_undestroy();
 		}
-//		update_rock();
+		if (delay.time_to_update_rock(time)) {
+			update_rock();
+		}
+		if (delay.time_to_add_rock(time)) {
+			add_rock();
+		}
 		if (delay.time_to_update_bullet(time)) {
 			update_bullet();
 		}
@@ -155,6 +160,19 @@ public class Model {
 		supplies = judge.get_supply();
 	}
 	
+	private void add_rock() {
+		rocks.add(new Rock(this, height + view.get_height() - 1));
+	}
+	private void update_rock() {
+		LinkedList<Rock> tmp = new LinkedList<Rock>();
+		for (Rock rock: rocks) {
+			rock.update();
+			if (rock.isOnScreen()) {
+				tmp.add(rock);
+			}
+		}
+		rocks = tmp;
+	}
 	public void supply_to_bullets() {
 		number.add_bullet();
 	}
@@ -203,20 +221,6 @@ public class Model {
 				tmp.add(undestroy);
 			}
 		}
-	}
-	private void update_rock() {
-		LinkedList<Rock> tmp = new LinkedList<Rock>();
-		//update old rocks
-		for (Rock rock: rocks) {
-			rock.falldown();
-			if (rock.inScreen()) {
-				tmp.add(rock);
-			}
-		}
-		if (number.add_rock()) {
-			tmp.add(new Rock());
-		}
-		rocks = tmp;
 	}
 	public void update_bullet() {
 		LinkedList<Bullet> tmp = new LinkedList<Bullet>();

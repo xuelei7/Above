@@ -16,6 +16,8 @@ public class NumberController {
 	private int jump_height = 9;
 	private int floor_height = 7;
 	private int score_per_floor = 100;
+	private int mx_rockheight;
+	private int mx_rockwidth;
 	Model model;
 	
 	public NumberController(Model m, int wall, int bullet, int rock) {
@@ -26,6 +28,9 @@ public class NumberController {
 		
 		this.mx_rock = rock;
 		this.rock = 0;
+
+		mx_rockheight = m.get_view().get_height() / 8;
+		mx_rockwidth = m.get_view().get_width() / 5;
 
 		model = m;
 		mx_undestroy_length = m.get_view().get_width() / 3;
@@ -87,6 +92,12 @@ public class NumberController {
 	}
 	public int get_mx_undestroy_length() {
 		return mx_undestroy_length;
+	}
+	public int get_mx_rockheight() {
+		return mx_rockheight;
+	}
+	public int get_mx_rockwidth() {
+		return mx_rockwidth;
 	}
 	public int jump_height() {
 		return jump_height;
