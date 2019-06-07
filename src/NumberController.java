@@ -6,8 +6,9 @@ public class NumberController {
 	private int mx_rock, rock;
 	private int mx_supply = 2;
 	private int supply_num = 5;
-	private int supply_rate = 1;
+	private int supply_rate = 4;
 	private int bullet = 100;
+	private int bullet_add = 5;
 	private int wall_min = 5;
 	private int jump_height = 9;
 	private int floor_height = 8;
@@ -83,5 +84,8 @@ public class NumberController {
 	
 	public boolean add_rock() {
 		return false;
+	}
+	public void add_bullet() {
+		bullet += bullet_add;
 	}
 }

@@ -140,11 +140,16 @@ public class Model {
 		if (delay.time_to_update_supply(time)) {
 			update_supply();
 		}
+		supplies = judge.get_supply();
 		if (delay.time_to_update_plane(time)) {
 			update_plane();
 		}
+		supplies = judge.get_supply();
 	}
 	
+	public void supply_to_bullets() {
+		number.add_bullet();
+	}
 	private void update_delay() {
 		delay.update(time);
 	}
