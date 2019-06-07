@@ -31,8 +31,16 @@ public class ConsoleView {
 		this(width, height);
 		model = m;
 	}
-	
-	
+	public boolean isOnScreen(int x, int y) {
+		return 0 <= x && x < width && model.get_height() <= y && y < (model.get_height() + height);
+	}
+	public int get_width() {
+		return width;
+	}
+	public int get_height() {
+		return height;
+	}
+
 	
 	/*--------------------
 	 * screen出力
@@ -55,7 +63,7 @@ public class ConsoleView {
 	}
 	private void draw_plane() {
 		int px = model.get_plane().get_x();
-		int py = model.get_plane().get_y();
+		int py = model.get_plane().get_height();
 		char me = model.get_plane().get_me();
 		put(me,px, height - (py - model.get_height()));
 	}
@@ -82,6 +90,8 @@ public class ConsoleView {
 	}
 	private void paint_first_line() {
 		System.out.println("Time: " + model.get_time() + " Height: " + model.get_height());
+		System.out.println("Plane height: " + model.get_plane().get_height());
+		System.out.println("Above: " + (model.get_height() + height) + " Below: " + model.get_height());
 		System.out.println("Score: " + model.get_score() + " Floor: " + model.get_floor() + " Bullet: " + model.get_bullet());
 	}
 	private void paint_screen() {

@@ -16,6 +16,9 @@ public class Wall {
 	public boolean isOnScreen(int h) {
 		return h <= y && y < h + 25;
 	}
+	public boolean isWall(int x) {
+		return wall[x] == '#';
+	}
 	public void destroy(int w) {
 		wall[w] = ' ';
 	}

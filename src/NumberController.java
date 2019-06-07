@@ -5,13 +5,14 @@ public class NumberController {
 	private int mx_bullet, bullet;
 	private int mx_rock, rock;
 	private int wall_min = 5;
+	private int jump_height = 9;
 	
 	public NumberController(int wall, int bullet, int rock) {
 		this.mx_wall = wall;
 		wall = 0;
 
 		this.mx_bullet = bullet;
-		bullet = 0;
+		bullet = 100;
 		
 		this.mx_rock = rock;
 		rock = 0;
@@ -52,6 +53,9 @@ public class NumberController {
 	}
 	public int get_rock() {
 		return rock;
+	}
+	public int jump_height() {
+		return jump_height;
 	}
 	public int wall_min() {
 		return wall_min;

@@ -42,7 +42,7 @@ public class Model {
 	}
 	private void set_delay() {
 		//screen, rock
-		delay = new DelayController(20,20);
+		delay = new DelayController();
 	}
 	private void set_number() {
 		//wall, bullet, rock
@@ -53,7 +53,7 @@ public class Model {
 	}
 	private void set_plane() {
 		//デフォルトのx座標，y座標
-		plane = new Plane(0,0,'0');
+		plane = new Plane(this,0,0,'0');
 	}
 	private void set_variables() {
 		score = 0;
@@ -102,6 +102,12 @@ public class Model {
 	public Plane get_plane() {
 		return plane;
 	}
+	public NumberController get_number() {
+		return number;
+	}
+	public ConsoleView get_view() {
+		return view;
+	}
 
 	/*----------------
 	 * update
@@ -112,7 +118,9 @@ public class Model {
 		update_wall();
 //		update_rock();
 //		update_bullet();
-		update_plane();
+		if (delay.time_to_update_plane(time)) {
+			update_plane();
+		}
 	}
 	
 	private void update_delay() {
@@ -157,7 +165,7 @@ public class Model {
 			plane.continue_jumping();
 		}
 		else {
-			falldown_plane();
+			plane.fall();
 		}
 	}
 	public void update_screen() {
@@ -166,10 +174,13 @@ public class Model {
 			height++;
 		}
 	}
-	public void falldown_plane() {
-		if (plane.nothing_under()) {
-			plane.fall();
+	public boolean isWall(int x, int y) {
+		for (Wall wall: walls) {
+			if (wall.get_Y() == y) {
+				return wall.isWall(x);
+			}
 		}
+		return false;
 	}
 	
 	public synchronized void process(String event) {
@@ -189,12 +200,13 @@ public class Model {
 				if (!plane.move_left()) update();
 			} else if (c == 'd') {
 				if (!plane.move_right()) update();
-			}
-			/*else if (event == "s") {
+			}/*
+			else if (c == 's'') {
 				plane.shoot();
-			} else if (event == "w" && !plane.jumping()) {
+			}*/ 
+			else if (c == 'w' && !plane.jumping()) {
 				plane.jump();
-			}*/ else {
+			} else {
 				update();
 			}
 		}
