@@ -9,7 +9,7 @@ public class NumberController {
 	private int mx_supply = 2;
 	private int supply_num = 5;
 	private int supply_rate = 2;
-	private int bullet = 100;
+	private int bullet = 10;
 	private int bullet_add = 5;
 	private int shooting_penalty = 10;
 	private int wall_min = 5;
@@ -29,7 +29,7 @@ public class NumberController {
 		this.mx_rock = rock;
 		this.rock = 0;
 
-		mx_rockheight = m.get_view().get_height() / 8;
+		mx_rockheight = m.get_view().get_height() / 5;
 		mx_rockwidth = m.get_view().get_width() / 5;
 
 		model = m;

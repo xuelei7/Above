@@ -9,9 +9,9 @@ public class DelayController {
 	private int rock = mx_rock;
 	private int screen_div = 200;
 	private int rock_div = 100;
-	private int rock_add = 50;
-	private int plane = 2;
-	private int bullet = 1;
+	private int rock_add = 100;
+	private int plane = 1;
+	private int bullet = 0;
 	private int supply = 1;
 
 	DelayController() {
@@ -38,21 +38,21 @@ public class DelayController {
 	}
 	
 	public boolean time_to_update_screen(int time) {
-		return (time % screen == 0);
+		return (screen == 0 || time % screen == 0);
 	}
 	public boolean time_to_update_plane(int time) {
-		return (time % plane == 0);
+		return (plane == 0 || time % plane == 0);
 	}
 	public boolean time_to_update_bullet(int time) {
-		return (time % bullet == 0);
+		return (bullet == 0 || time % bullet == 0);
 	}
 	public boolean time_to_update_supply(int time) {
-		return (time % supply == 0);
+		return (supply == 0 || time % supply == 0);
 	}
 	public boolean time_to_add_rock(int time) {
-		return (time % rock_add == 0);
+		return (rock_add == 0 || time % rock_add == 0);
 	}
 	public boolean time_to_update_rock(int time) {
-		return (time % rock == 0);
+		return (rock == 0 || time % rock == 0);
 	} 
 }

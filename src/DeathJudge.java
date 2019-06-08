@@ -8,6 +8,23 @@ public class DeathJudge {
 	}
 	
 	public boolean game_over() {
+		if (plane_is_out_of_screen()) {
+			return true;
+		}
+		if (plane_at_rock()) {
+			return true;
+		}
+		return false;
+	}
+	private boolean plane_is_out_of_screen() {
+		return !(model.get_view().isOnScreen(model.get_plane().get_x(), model.get_plane().get_height()));
+	}
+	public boolean plane_at_rock() {
+		LinkedList<Rock> rocks = model.get_rocks();
+		for (Rock rock: rocks) {
+			if (rock.isRock(model.get_plane().get_x(), model.get_plane().get_height()))
+				return true;
+		}
 		return false;
 	}
 

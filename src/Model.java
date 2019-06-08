@@ -129,6 +129,9 @@ public class Model {
 	public DelayController get_delay() {
 		return delay;
 	}
+	public DeathJudge get_judge() {
+		return judge;
+	}
 
 	/*----------------
 	 * update
