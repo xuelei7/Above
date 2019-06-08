@@ -100,13 +100,6 @@ public class ConsoleView {
 	public void game_over() {
 		clear();
 		System.out.println("GAME OVER");
-		if (model.get_judge().plane_at_rock()) System.out.println("On Rock");
-		LinkedList<Rock> rocks = model.get_rocks();
-		for (Rock rock: rocks) {
-			System.out.println("x: " + rock.get_x() + " y: " + rock.get_y() + " height: " + rock.get_height() + " width: " + rock.get_width());
-		}
-		Plane plane = model.get_plane();
-		System.out.println(plane.get_x() + " " + plane.get_height());
 		drawString("Score: " + model.get_score(),0,0);
 		drawString("Floor: " + model.get_score(),0,1);
 		paint_screen();
@@ -120,13 +113,6 @@ public class ConsoleView {
 				screen[h][w] = c;
 	}
 	private void paint_first_line() {
-		System.out.println("Time: " + model.get_time() + " Height: " + model.get_height());
-		LinkedList<Rock> rocks = model.get_rocks();
-		for (Rock rock: rocks) {
-			System.out.println("x: " + rock.get_x() + " y: " + rock.get_y() + " height: " + rock.get_height() + " width: " + rock.get_width());
-		}
-		Plane plane = model.get_plane();
-		System.out.println("Plane: " + model.get_plane().get_x() + "," + model.get_plane().get_height());
 		System.out.println("Score: " + model.get_score() + " Floor: " + model.get_floor() + " Bullet: " + model.get_number().get_bullet());
 	}
 	private void paint_screen() {

@@ -32,14 +32,14 @@ public class Plane {
 		return falling;
 	}
 	public boolean move_left() {
-		if (x <= 0) return false;
+		if (x <= 0 || model.isRock(x-1,height)) return false;
 		else {
 			x--;
 			return true;
 		}
 	}
 	public boolean move_right() {
-		if (x >= 79) return false;
+		if (x >= 79 || model.isRock(x+1,height)) return false;
 		else {
 			x++;
 			return true;
@@ -61,7 +61,9 @@ public class Plane {
 		return false;
 	}
 	public void fall() {
-		if (!model.isWall(x,height-1) && !model.isUndestroyable(x,height-1)) {
+		if (!model.isWall(x,height-1)
+		&& !model.isUndestroyable(x,height-1)
+		&& !model.isRock(x,height-1)) {
 			height--;
 		} else {
 			falling = false;
@@ -73,8 +75,9 @@ public class Plane {
 		&& model.get_view().isOnScreen(x, height+1)
 		&& !model.isUndestroyable(x,height+1)) {
 			height++;
+			jumping--;
+		} else {
+			jumping = 0;
 		}
-		//minus left jumping height
-		jumping--;
 	}
 }

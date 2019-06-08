@@ -8,6 +8,7 @@ public class Model {
 	private int floor;
 	private int time;
 	private int height;
+	private boolean game_over = false;
 	
 	private ConsoleView view;
 	private Controller controller;
@@ -231,11 +232,11 @@ public class Model {
 			bullet.update();
 			int x = bullet.get_x();
 			int y = bullet.get_y();
-			if (isUndestroyable(x,y)) {
-				continue;
-			}
 			if (isRock(x,y)) {
 				destroyRock(x,y);
+				continue;
+			}
+			if (isUndestroyable(x,y)) {
 				continue;
 			}
 			if (isDestroyableWall(x,y)) {
@@ -268,11 +269,12 @@ public class Model {
 		}
 		return false;
 	}
-	private boolean isRock(int x, int y) {
-		return false;
-	}
 	private void destroyRock(int x, int y) {
-
+		for (Rock rock: rocks) {
+			if (rock.isRock(x,y)) {
+				rock.destroy(x,y);
+			}
+		}
 	}
 	public void update_plane() {
 		if (plane.jumping()) {
@@ -287,6 +289,14 @@ public class Model {
 		if (delay.time_to_update_screen(time)) {
 			height++;
 		}
+	}
+	public boolean isRock(int x, int y) {
+		for (Rock rock: rocks) {
+			if (rock.isRock(x,y)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	public boolean isWall(int x, int y) {
 		for (Wall wall: walls) {
@@ -304,6 +314,12 @@ public class Model {
 	}
 	
 	public synchronized void process(String event) {
+		
+		if (game_over) {
+			view.game_over();
+			return;
+		}
+
 		//時間経過
 		time++;
 		
@@ -322,10 +338,10 @@ public class Model {
 			else if (c == 'd') {
 				if (!plane.move_right()) update();
 			}
-			else if (c == 'm') {
+			else if (c == 'm' || c == 's') {
 				plane.shoot();
 			}
-			else if (c == 'w' && !plane.jumping()) {
+			else if ((c == 'n' || c == 'w') && !plane.jumping()) {
 				plane.jump();
 			} else {
 				update();
@@ -335,6 +351,7 @@ public class Model {
 		/*  OK  */
 		if (judge.game_over()) {
 			view.game_over();
+			game_over = true;
 		} else {
 			view.update();
 		}

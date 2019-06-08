@@ -50,7 +50,7 @@ public class Rock {
 	public boolean isRock(int px, int py) {
 		if (py <= y - height || y < py) return false;
 		if (px < x || x + width <= px) return false;
-		return rock[py - (y-height+1)][px - x] == c;
+		return rock[y - py][px - x] == c;
 	}
 	private void drawRock() {
 		for (int i = 0; i < height; i++) {
@@ -62,5 +62,8 @@ public class Rock {
 		rock[0][width-1] = ' ';
 		rock[height-1][0] = ' ';
 		rock[height-1][width-1] = ' ';
+	}
+	public void destroy(int px, int py) {
+		rock[y - py][px - x] = ' ';
 	}
 }
