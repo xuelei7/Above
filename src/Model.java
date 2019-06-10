@@ -38,7 +38,7 @@ public class Model {
 		set_objects();
 	}
 	private void set_view() {
-		view = new ConsoleView(this,80,22);
+		view = new ConsoleView(this,80,21);
 	}
 	private void set_controller() {
 		controller = new Controller(this);

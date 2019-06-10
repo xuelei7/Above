@@ -114,6 +114,7 @@ public class ConsoleView {
 	}
 	private void paint_first_line() {
 		System.out.println("Score: " + model.get_score() + " Floor: " + model.get_floor() + " Bullet: " + model.get_number().get_bullet());
+		System.out.println("Move LEFT: A, Move RIGHT: D, Jump: W/N, Shoot: S/M");
 	}
 	private void paint_screen() {
 		for (int h = 0; h < screen.length; h++){
