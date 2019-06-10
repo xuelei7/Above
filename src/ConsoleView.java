@@ -101,7 +101,7 @@ public class ConsoleView {
 		clear();
 		System.out.println("GAME OVER");
 		drawString("Score: " + model.get_score(),0,0);
-		drawString("Floor: " + model.get_score(),0,1);
+		drawString("Floor: " + model.get_floor(),0,1);
 		paint_screen();
 	}
 	private void clear() {
