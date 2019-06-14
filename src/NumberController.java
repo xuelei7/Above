@@ -36,13 +36,6 @@ public class NumberController {
 		mx_undestroy_length = m.get_view().get_width() / 3;
 	}
 	
-	public void update_mxwall(int time) {
-	}
-	public void update_mxbullet(int time) {
-	}
-	public void update_mxrock(int time) {
-	}
-	
 	public void change_add_wall(int d) {
 		wall += d;
 	}

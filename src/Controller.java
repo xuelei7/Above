@@ -8,7 +8,7 @@ import javax.swing.Timer;
 public class Controller implements ActionListener{
 
 	//変数
-	private final static int DELAY = 100;
+	private final static int DELAY = 200;
 	private Timer timer;
 	private Model model;
 	

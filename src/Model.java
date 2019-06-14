@@ -30,9 +30,7 @@ public class Model {
 		set_view();
 		set_controller();
 		set_delay();
-		set_number();
 		set_judge();
-		set_plane();
 
 		set_variables();
 		set_objects();
@@ -44,19 +42,10 @@ public class Model {
 		controller = new Controller(this);
 	}
 	private void set_delay() {
-		//screen, rock
 		delay = new DelayController();
-	}
-	private void set_number() {
-		//wall, bullet, rock
-		number = new NumberController(this,20,20,23);
 	}
 	private void set_judge() {
 		judge = new DeathJudge(this);
-	}
-	private void set_plane() {
-		//デフォルトのx座標，y座標
-		plane = new Plane(this,39,1,'0');
 	}
 	private void set_variables() {
 		score = 0;
@@ -65,11 +54,21 @@ public class Model {
 		height = -20;
 	}
 	private void set_objects() {
+		set_number();
+		set_plane();
 		set_walls();
 		set_bullets();
 		set_rocks();
 		set_supplies();
 		set_undestroys();
+	}
+	private void set_number() {
+		//wall, bullet, rock
+		number = new NumberController(this,20,20,23);
+	}
+	private void set_plane() {
+		//デフォルトのx座標，y座標
+		plane = new Plane(this,39,1,'0');
 	}
 	private void set_walls() {
 		walls = new LinkedList<Wall>();
@@ -333,10 +332,12 @@ public class Model {
 			System.out.println(event);
 			char c = event.charAt(0);
 			if (c == 'a') {
-				if (!plane.move_left()) update();
+				plane.move_left();
+				update();
 			}
 			else if (c == 'd') {
-				if (!plane.move_right()) update();
+				plane.move_right();
+				update();
 			}
 			else if (c == 'm' || c == 's') {
 				plane.shoot();
