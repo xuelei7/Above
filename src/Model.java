@@ -8,7 +8,8 @@ public class Model {
 	private int floor;
 	private int time;
 	private int height;
-	private boolean game_over = false;
+	private boolean game_start;
+	private boolean game_over;
 	
 	private ConsoleView view;
 	private Controller controller;
@@ -27,13 +28,7 @@ public class Model {
 	 * 基本構築
 	 * ---------------*/
 	public Model(){
-		set_view();
-		set_controller();
-		set_delay();
-		set_judge();
-
-		set_variables();
-		set_objects();
+		game_set();
 	}
 	private void set_view() {
 		view = new ConsoleView(this,80,21);
@@ -52,6 +47,8 @@ public class Model {
 		floor = 0;
 		time = 0;
 		height = -20;
+		game_start = false;
+		game_over = false;
 	}
 	private void set_objects() {
 		set_number();
@@ -163,6 +160,16 @@ public class Model {
 		supplies = judge.get_supply();
 	}
 	
+	private void game_set() {
+		set_view();
+		set_controller();
+		set_delay();
+		set_judge();
+
+		set_variables();
+		set_objects();
+	}
+
 	private void add_rock() {
 		rocks.add(new Rock(this, height + view.get_height() - 1));
 	}
@@ -314,8 +321,21 @@ public class Model {
 	
 	public synchronized void process(String event) {
 		
+		if (!game_start) {
+			if (!event.equals("TIME_ELAPSED")) {
+				game_start = true;
+				return;
+			} else {
+				view.game_start();
+				return;
+			}
+		}
+
 		if (game_over) {
 			view.game_over();
+			if (!event.equals("TIME_ELAPSED")) {
+				game_set();
+			}
 			return;
 		}
 

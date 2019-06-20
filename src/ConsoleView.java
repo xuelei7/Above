@@ -99,10 +99,29 @@ public class ConsoleView {
 	}
 	public void game_over() {
 		clear();
-		System.out.println("GAME OVER");
-		drawString("Score: " + model.get_score(),0,0);
-		drawString("Floor: " + model.get_floor(),0,1);
+		System.out.println();
+		int hh = height/2-5;
+		drawString_middel("GAME OVER",hh);
+		drawString_middel("PRESS AND KEY TO RETURN TO THE BEGIN SURFACE", hh+2);
+		drawString_middel("Score: " + model.get_score(),hh+4);
+		drawString_middel("Floor: " + model.get_floor(),hh+5);
 		paint_screen();
+	}
+	public void game_start() {
+		clear();
+		System.out.println();
+		int hh = height/2-5;
+		drawString_middel("ABOVE",hh);
+		drawString_middel("PRESS ANY KEY TO START", hh + 2);
+		drawString_middel("Left: A",hh+4);
+		drawString_middel("Right: D", hh+5);
+		drawString_middel("Jump: W or N",hh+6);
+		drawString_middel("Shoot: S or M", hh+7);
+		paint_screen();		
+	}
+	private void drawString_middel(String s, int h) {
+		int length = s.length();
+		drawString(s,width/2-length/2,h);
 	}
 	private void clear() {
 		clear(' ');
