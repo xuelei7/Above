@@ -65,6 +65,7 @@ public class Plane {
 		&& !model.isUndestroyable(x,height-1)
 		&& !model.isRock(x,height-1)) {
 			height--;
+			falling = true;
 		} else {
 			falling = false;
 		}
